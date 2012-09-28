@@ -85,7 +85,7 @@ class FeedbackListView(ListView):
         if not self.request.user.is_staff and f_list != 'mine':
             f_filters.update(dict(private=False))
 
-        queryset = self.model.objects.filter(**f_filters)
+        queryset = self.model.objects.filter(**f_filters).order_by('-vote_score', '-created')
         return queryset
 
     @current_site_context
