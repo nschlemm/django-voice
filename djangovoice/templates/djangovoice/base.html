@@ -21,77 +21,66 @@
       {# if you want to use your custom style, use `styles` block to reset default theme. #}
       <link rel="stylesheet" href="{{ STATIC_URL }}djangovoice/css/bootstrap.min.css" />
       <link rel="stylesheet" href="{{ STATIC_URL }}djangovoice/css/style.css" />
-      <link rel="stylesheet" href="{{ STATIC_URL }}djangovoice/css/bootstrap-responsive.min.css" />
     {% endblock %}
 
-	<script src="{{ STATIC_URL }}djangovoice/js/libs/modernizr-2.5.3-respond-1.1.0.min.js "></script>
+    <script src="{{ STATIC_URL }}djangovoice/js/libs/modernizr-2.5.3-respond-1.1.0.min.js "></script>
   </head>
 
   <body>
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <header>
-      <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container">
-            <a class="brand" href="{% url brand_view %}">{{ site.name }} {% trans "Feedback" %}</a>
-            <ul class="nav">
-              {% block navigation %}
-                <li><a href="{% url 'djangovoice_list' list='all' %}">{% trans "All" %}</a></li>
-              <li><a href="{% url 'djangovoice_list' list='open' %}">{% trans "Open" %}</a></li>
-              <li><a href="{% url 'djangovoice_list' list='closed' %}">{% trans "Closed" %}</a></li>
-              <li><a href="{% url 'djangovoice_list' list='mine' %}">{% trans "Mine" %}</a></li>
-              <li class="feed-link">
-                <a href="{% url 'feeds_latest' %}" title="{% trans "Subscribe to the feedback RSS feed" %}">
-                  <img src="{{ STATIC_URL }}djangovoice/img/rss.png" alt="RSS" />
+      <div class="navtop navbar-static-top">
+        <div class="container-fluid">
+          <ul class="nav pull-right">
+            {% if user.is_authenticated %}
+              <li>
+                <span>
+                  {% trans "hello" %}, <a href="#">{{ user.username }}</a>
+                </span>
+              </li>
+              <li>
+                <a href="{% url 'djangovoice_submit' %}">
+                  {% trans "submit feedback" %}
                 </a>
               </li>
+              <li>
+                <a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'djangovoice_home' %}">
+                  {% trans "sign out" %}
+                </a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'djangovoice_home' %}">
+                  {% trans "sign in" %}
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+
+          <ul class="nav">
+            {% block navigation %}
+              <li><a href="{% url 'djangovoice_list' list='all' %}">{% trans "all" %}</a></li>
+              <li><a href="{% url 'djangovoice_list' list='open' %}">{% trans "open" %}</a></li>
+              <li><a href="{% url 'djangovoice_list' list='closed' %}">{% trans "closed" %}</a></li>
+              <li><a href="{% url 'djangovoice_list' list='mine' %}">{% trans "mine" %}</a></li>
             {% endblock %}
-            </ul>
-            <ul class="nav pull-right">
-              {% if user.is_authenticated %}
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    {% user_name user %}
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a href="/">{% trans "Back to mainpage" %}</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                      <a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'djangovoice_home' %}">
-                        {% trans "Sign out" %}
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              {% else %}
-                <li>
-                  <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'djangovoice_home' %}">{% trans "Sign in" %}</a>
-                </li>
-              {% endif %}
-            </ul>
+          </ul>
+        </div>
+      </div>
+
+      <div class="navbar navbar-static-top">
+        <div class="navbar-inner">
+          <div class="container-fluid">
+            <a class="brand" href="{% url brand_view %}">{{ site.name }} {% trans "Feedback" %}</a>
           </div>
         </div>
       </div>
     </header>
 
-    <div role="main">
-      <div id="wrapper">
-        <div class="container" id="actions">
-          <ul>
-            <li><a href="{% url 'djangovoice_submit' %}">{% trans "Submit feedback" %}</a></li>
-            {% block actions %}{% endblock %}
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
+    <div class="container-fluid">
       <div id="content">
-        <div class="row">
-          <div class="span9">
+        <div class="row-fluid">
+          <div class="span8">
             <div id="feedback">
               {% for message in messages %}
                 <div class="alert-message{% if message.tags %} {{ message.tags }}{% endif %}">
@@ -104,7 +93,7 @@
             </div>
           </div>
 
-          <div class="span3">
+          <div class="span4">
             <div id="sidebar">
               {% block sidebar %}{% endblock %}
             </div>
@@ -114,9 +103,9 @@
     </div>
 
     <footer>
-      <div class="container">
+      <div class="container-fluid">
         <p>
-          <a href="https://github.com/gkmngrgn/django-voice">{% trans "Powered by django-voice" %}</a>
+          <a href="https://github.com/gkmngrgn/django-voice">{% trans "powered by django-voice" %}</a>
         </p>
       </div>
     </footer>
