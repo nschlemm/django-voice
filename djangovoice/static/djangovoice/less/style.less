@@ -1,9 +1,16 @@
-// Colors
+// colors
 @yellow: #CFF09E;
 @green1: #A8DBA8;
 @green2: #79BD9A;
 @aqua: #3B8686;
 @blue: #0B486B;
+
+// feedback type colors
+@feedback_idea: #3a95c4;
+@feedback_problem: #ff4e4e;
+@feedback_general: #499e00;
+@feedback_wontdo: #a760ff;
+@feedback_question: #009e8e;
 
 body {
   background-color: #eee;
@@ -141,17 +148,55 @@ header {
     margin: 0;
   }
 
-  table.list {
-    border-top: 1px solid #ddd;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      border-top: 1px solid #888;
+
+      &.feedback-type {
+        &-problem {
+          border-top-color: @feedback_problem;
+        }
+
+        &-general {
+          border-top-color: @feedback_general;
+        }
+
+        &-idea {
+          border-top-color: @feedback_idea;
+        }
+
+        &-wontdo {
+          border-top-color: @feedback_wontdo;
+        }
+
+        &-question {
+          border-top-color: @feedback_question;
+        }
+      }
+
+      .votes {
+        padding: 10px;
+      }
+    }
   }
 
   td {
-    &.details p {
-      margin-top: 3px;
+    padding: 0;
+
+    &.votes {
+      padding: 8px;
     }
 
-    &.status {
-      width: 40px;
+    &.details {
+      width: 100%;
+
+      p {
+        margin-top: 3px;
+      }
     }
 
     &.feedback-private {
@@ -159,6 +204,17 @@ header {
       background-color: #ffcccc;
       font-weight: bold;
       text-align: center;
+    }
+
+    &.title {
+      a {
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+
+    img {
+      vertical-align: middle;
     }
   }
 
@@ -204,11 +260,14 @@ footer {
   }
 }
 
-.feedback-status {
-  font-weight: normal;
-  font-size: 11px;
-  padding: 2px 7px;
-  vertical-align: middle;
+span.feedback-status,
+span.feedback-type {
+  padding: 2px 8px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+
+span.feedback-status {
   background-color: #d2f4f6;
   color: #326c6f;
 
@@ -228,33 +287,28 @@ footer {
   }
 }
 
-.feedback-type {
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  padding: 3px 8px;
-  color: #ffffff;
-  font-size: 9px;
-  text-transform: uppercase;
+span.feedback-type {
   background-color: #219da4;
+  color: #fff;
 
   &-problem {
-    background-color: #ff4e4e;
+    background-color: @feedback_problem;
   }
 
   &-general {
-    background-color: #499e00;
+    background-color: @feedback_general;
   }
 
   &-idea {
-    background-color: #3a95c4;
+    background-color: @feedback_idea;
   }
 
   &-wontdo {
-    background-color: #a760ff;
+    background-color: @feedback_wontdo;
   }
 
   &-question {
-    background-color: #009e8e;
+    background-color: @feedback_question;
   }
 }
 
@@ -305,9 +359,8 @@ p.meta {
   background-color: #f4ffe9;
 }
 
-/*** pagination ***/
 .pagination {
-  margin: 10px 0 0 0;
+  margin: 0;
   padding: 2px 10px;
   font-size: 0.8em;
   color: #fff;
@@ -317,45 +370,6 @@ p.meta {
   span, a {
     margin: 0;
     padding: 0;
-  }
-}
-
-/****** lists *******/
-table.list {
-  width: 100%;
-
-  h3 {
-    font-size: 16px;
-    line-height: 16px;
-    padding: 0;
-  }
-
-  tr {
-    border-width: 1px 0;
-    border-color: #f0f1f2;
-    border-style: solid;
-  }
-
-  &.list-all .closed {
-    text-decoration: line-through;
-  }
-
-  td {
-    padding: 8px 10px;
-    color: #4b4b4b;
-
-    img {
-      vertical-align: middle;
-    }
-
-    &.title a {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    &.votes {
-      width: 75px;
-    }
   }
 }
 

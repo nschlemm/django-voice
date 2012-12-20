@@ -15,57 +15,54 @@
   <h1>{{ title }}</h1>
 
   {% if object_list %}
+    <ul class="feedback-list">
+      {% for object in object_list %}
+        {% get_comment_count for object as comment_count %}
 
-    <table class="list">
-      {% for feedback in object_list %}
-        {% get_comment_count for feedback as comment_count %}
+        <li class="feedback-type-{{ object.type.slug }}">
+          <span class="pull-right feedback-type feedback-type-{{ object.type.slug }}">{{ object.type.title }}</span>
+          <span class="pull-right feedback-status feedback-status-{{ object.status.slug }}">{{ object.status.title }}</span>
 
-        <tr>
-          <td class="votes">
-            {% vote_buttons_for feedback "djangovoice/includes/vote_buttons.html" %}
-          </td>
-          <td class="status">
-            <span class="feedback-type feedback-type-{{ feedback.type.slug }}">{{ feedback.type.title }}</span>
-          </td>
+          <div class="votes pull-left">
+            {% vote_buttons_for object "djangovoice/includes/vote_buttons.html" %}
+          </div>
 
-          <td class="details">
+          <div class="details">
             <h3>
-              <a href="{{ feedback.get_absolute_url }}">{{ feedback.title }}</a>
-              <span class="feedback-status feedback-status-{{ feedback.status.slug }}">{{ feedback.status.title }}</span>
+              <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
             </h3>
 
             <p>
               <span class="feedback-comments">
-                <a href="{{ feedback.get_absolute_url }}">
+                <a href="{{ object.get_absolute_url }}">
                   {{ comment_count }} {% blocktrans %}comment{{ comment_count|pluralize }}{% endblocktrans %}
                 </a>
               </span>
 
               <span class="feedback-user">
-                {% if feedback.user %}
+                {% if object.user %}
                   {% trans "Submitted by:" %}
-                  <a href="{{ feedback.user.get_absolute_url }}" class="avatar" title="{% trans "View profile" %}">
-                    {% gravatar feedback.user.username 15 %}
+                  <a href="{{ object.user.get_absolute_url }}" class="avatar" title="{% trans "View profile" %}">
+                    {% gravatar object.user.username 15 %}
                   </a>
 
-                  <a href="{{ feedback.user.get_absolute_url }}" title="View profile">{% user_name feedback.user %}</a>
+                  <a href="{{ object.user.get_absolute_url }}" title="View profile">{% user_name object.user %}</a>
                 {% else %}
                   {% trans "Submitted anonymously" %}
                 {% endif %}
               </span>
 
               <span class="feedback-date">
-                {% blocktrans with feedback.created|date:"d M Y" as create_date %}on {{ create_date }}{% endblocktrans %}
+                {% blocktrans with object.created|date:"d M Y" as create_date %}on {{ create_date }}{% endblocktrans %}
               </span>
             </p>
-          </td>
-
-          {% if feedback.private %}
-            <td class="feedback-private">{% trans "PRIVATE" %}</td>
-          {% endif %}
-        </tr>
+          </div>
+        </li>
       {% endfor %}
-    </table>
+    </ul>
+{#          {% if feedback.private %}#}
+{#            <td class="feedback-private">{% trans "PRIVATE" %}</td>#}
+{#          {% endif %}#}
   {% else %}
     <p>{% trans "No one has contributed any feedback yet. Be the first and submit some feedback!" %}</p>
   {% endif %}
