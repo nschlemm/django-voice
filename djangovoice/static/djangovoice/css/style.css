@@ -1,9 +1,9 @@
 body {
-  background-color: #dee1e2;
+  background-color: #eee;
 }
 header .navtop {
   height: 20px;
-  background-color: #0B486B;
+  background-color: #0b486b;
   font-size: 0.8em;
 }
 header .navtop a {
@@ -39,7 +39,7 @@ header .navbar a.brand {
   text-shadow: #222 0 0 1px;
 }
 header .navbar-inner {
-  background-color: #79BD9A;
+  background-color: #79bd9a;
   background-image: none;
 }
 #actions {
@@ -67,14 +67,6 @@ header .navbar-inner {
   text-shadow: 1px 1px 0 #51595c;
   background-color: #6d787c;
 }
-#content {
-  padding-top: 20px;
-  background-color: #fff;
-  border: 1px solid #A8DBA8;
-}
-#sidebar {
-  padding-right: 10px;
-}
 #sidebar h4 {
   font-weight: bold;
 }
@@ -101,17 +93,10 @@ header .navbar-inner {
   color: #3f4547;
   text-shadow: 0 1px 0 #ffffff;
 }
-footer {
-  margin: 5px 0 20px 0;
-}
-footer a {
-  color: #989898;
-  text-shadow: 0 1px 0 #ffffff;
-  font-size: 0.8em;
-}
 /**** index ****/
 #feedback {
-  padding-left: 10px;
+  border: 1px solid #79bd9a;
+  background-color: #fff;
 }
 #feedback h2 {
   margin: 20px 0 0 0;
@@ -128,48 +113,46 @@ footer a {
 #feedback td.status {
   width: 40px;
 }
-.vote_buttons {
-  overflow: auto;
-  border-radius: 3px;
-  background: #ddd;
-  margin: 0;
-  padding: 0 4px 4px 4px;
-  width: 24px;
-}
-.vote_buttons a.upVote {
-  margin: 4px 0 2px 0;
-  float: left;
-}
-.vote_buttons a.upVote.voted {
-  border-bottom-color: #222;
-}
-.vote_buttons a.downVote {
-  margin: 2px 0 0 0;
-  float: right;
-}
-.vote_buttons a.downVote.voted {
-  border-top-color: #222;
-}
-.vote_buttons a.upVote,
-.vote_buttons a.downVote {
-  height: 10px;
-  width: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 12px solid #888;
-}
-.vote_buttons div.score {
-  height: 10px;
-  text-align: center;
-  vertical-align: center;
-  font-size: 13px;
+#feedback td.feedback-private {
+  color: #ff0000;
+  background-color: #ffcccc;
   font-weight: bold;
-  color: #888;
-  border-radius: 2px;
-  margin: 0 0;
-  padding: 0 0 5px 0;
-  display: block;
-  clear: both;
+  text-align: center;
+}
+#feedback td.details p img,
+#feedback p .feedback-user img {
+  vertical-align: middle;
+}
+#feedback td.details p .avatar,
+#feedback p .feedback-user .avatar {
+  margin: 0 5px;
+}
+footer {
+  margin: 5px 0 20px 0;
+}
+footer a {
+  color: #989898;
+  text-shadow: 0 1px 0 #ffffff;
+  font-size: 0.8em;
+}
+.vote_buttons .btn-mini {
+  width: 50px;
+}
+.vote_buttons .btn-mini.voted {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #faa732;
+  *background-color: #f89406;
+  background-image: -moz-linear-gradient(top, #fbb450, #f89406);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450), to(#f89406));
+  background-image: -webkit-linear-gradient(top, #fbb450, #f89406);
+  background-image: -o-linear-gradient(top, #fbb450, #f89406);
+  background-image: linear-gradient(to bottom, #fbb450, #f89406);
+  background-repeat: repeat-x;
+  border-color: #f89406 #f89406 #ad6704;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 .feedback-status {
   font-weight: normal;
@@ -227,20 +210,6 @@ footer a {
 p.meta {
   margin-bottom: 50px;
 }
-#feedback td.feedback-private {
-  color: #ff0000;
-  background-color: #ffcccc;
-  font-weight: bold;
-  text-align: center;
-}
-#feedback td.details p img,
-#feedback p .feedback-user img {
-  vertical-align: middle;
-}
-#feedback td.details p .avatar,
-#feedback p .feedback-user .avatar {
-  margin: 0 5px;
-}
 /**** detail ****/
 #feedback-detail-heading {
   margin: 0;
@@ -270,23 +239,17 @@ p.meta {
 }
 /*** pagination ***/
 .pagination {
-  text-align: center;
-  font-size: 16px;
-  margin-top: 20px;
-  color: #828282;
+  margin: 10px 0 0 0;
+  padding: 2px 10px;
+  font-size: 0.8em;
+  color: #fff;
+  background-color: #79bd9a;
+  text-shadow: #222 0 0 1px;
 }
-.pagination .current {
-  margin: 0 20px;
-}
-#pagination-last-page {
-  margin-left: 20px;
-}
-#pagination-first-page {
-  margin-right: 20px;
-}
-#pagination-last-page,
-#pagination-first-page {
-  color: #999999;
+.pagination span,
+.pagination a {
+  margin: 0;
+  padding: 0;
 }
 /****** lists *******/
 table.list {
@@ -315,6 +278,9 @@ table.list td img {
 table.list td.title a {
   font-size: 16px;
   font-weight: bold;
+}
+table.list td.votes {
+  width: 75px;
 }
 /**** forms ****/
 #id_honeypot {

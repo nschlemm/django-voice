@@ -1,4 +1,5 @@
 {% load user_name from djangovoice_tags %}
+{% load blocktrans from i18n %}
 {% load trans from i18n %}
 {% load url from future %}
 
@@ -78,25 +79,47 @@
     </header>
 
     <div class="container-fluid">
-      <div id="content">
-        <div class="row-fluid">
-          <div class="span8">
-            <div id="feedback">
-              {% for message in messages %}
-                <div class="alert-message{% if message.tags %} {{ message.tags }}{% endif %}">
-                  <a class="close" href="#">×</a>
-                  <p>{{ message }}</p>
-                </div>
-              {% endfor %}
+      <div class="row-fluid">
+        <div class="span8">
+          <div id="feedback">
+            {% for message in messages %}
+              <div class="alert-message{% if message.tags %} {{ message.tags }}{% endif %}">
+                <a class="close" href="#">×</a>
+                <p>{{ message }}</p>
+              </div>
+            {% endfor %}
 
-              {% block content %}{% endblock %}
-            </div>
+            {% block content %}{% endblock %}
+
+            {% if page_obj %}
+              <div class="pagination">
+                <span class="step-links">
+                  {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                      {% trans "previous" %}
+                    </a>
+                  {% endif %}
+
+                  <span class="current">
+                    {% blocktrans with number=page_obj.number pages=paginator.num_pages %}
+                      Page {{ number }} of {{ pages }}.
+                    {% endblocktrans %}
+                  </span>
+
+                  {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">
+                      {% trans "next" %}
+                    </a>
+                  {% endif %}
+                </span>
+              </div>
+            {% endif %}
           </div>
+        </div>
 
-          <div class="span4">
-            <div id="sidebar">
-              {% block sidebar %}{% endblock %}
-            </div>
+        <div class="span4">
+          <div id="sidebar">
+            {% block sidebar %}{% endblock %}
           </div>
         </div>
       </div>
