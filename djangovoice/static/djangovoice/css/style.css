@@ -113,6 +113,7 @@ header .navbar-inner {
   list-style-type: none;
 }
 #feedback ul.feedback-list li {
+  height: 95px;
   border-top: 1px solid #888;
 }
 #feedback ul.feedback-list li.feedback-type-problem {
@@ -132,6 +133,13 @@ header .navbar-inner {
 }
 #feedback ul.feedback-list li .votes {
   padding: 10px;
+}
+#feedback ul.feedback-list li h3 {
+  margin: 0;
+  font-size: 18px;
+}
+#feedback ul.feedback-list li a {
+  color: #0b486b;
 }
 #feedback td {
   padding: 0;

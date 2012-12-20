@@ -35,7 +35,11 @@
             <p>
               <span class="feedback-comments">
                 <a href="{{ object.get_absolute_url }}">
-                  {{ comment_count }} {% blocktrans %}comment{{ comment_count|pluralize }}{% endblocktrans %}
+                  {% blocktrans count counter=comment_count %}
+                    {{ counter }} comment
+                  {% plural %}
+                    {{ counter }} comments
+                  {% endblocktrans %}
                 </a>
               </span>
 
