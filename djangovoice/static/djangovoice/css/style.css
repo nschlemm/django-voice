@@ -1,3 +1,6 @@
+.content-spaces {
+  padding: 10px;
+}
 body {
   background-color: #eee;
 }
@@ -109,25 +112,25 @@ header .navbar-inner {
   padding: 0;
   list-style-type: none;
 }
-#feedback ul li {
+#feedback ul.feedback-list li {
   border-top: 1px solid #888;
 }
-#feedback ul li.feedback-type-problem {
+#feedback ul.feedback-list li.feedback-type-problem {
   border-top-color: #ff4e4e;
 }
-#feedback ul li.feedback-type-general {
+#feedback ul.feedback-list li.feedback-type-general {
   border-top-color: #499e00;
 }
-#feedback ul li.feedback-type-idea {
+#feedback ul.feedback-list li.feedback-type-idea {
   border-top-color: #3a95c4;
 }
-#feedback ul li.feedback-type-wontdo {
+#feedback ul.feedback-list li.feedback-type-wontdo {
   border-top-color: #a760ff;
 }
-#feedback ul li.feedback-type-question {
+#feedback ul.feedback-list li.feedback-type-question {
   border-top-color: #009e8e;
 }
-#feedback ul li .votes {
+#feedback ul.feedback-list li .votes {
   padding: 10px;
 }
 #feedback td {
@@ -287,55 +290,9 @@ p.meta {
 #id_honeypot {
   display: none;
 }
-form table {
-  width: 100%;
-}
-textarea {
-  width: 70%;
-  height: 120px;
-}
-input[type="text"],
-input[type="password"],
-textarea {
-  margin-bottom: 10px;
-  width: 100%;
-}
-input[type="submit"] {
-  border: none;
-  padding: 5px 15px;
-  font-size: 12px;
-  background-color: #69b500;
-  text-shadow: 1px 1px 0 #457800;
-  color: #ffffff;
-}
-form td.input-label {
-  width: 200px;
-  vertical-align: top;
-}
-form td.input-label label {
-  padding: 0;
-  text-align: left;
-}
-form td {
-  padding-bottom: 5px;
-}
-form td.input-label .form-help,
-.help-text {
-  font-size: 11px;
-  color: #999999;
-  line-height: 12px;
-  float: left;
-}
-form td.field-error input,
-form td.field-error textarea {
-  border-color: #ff8b8b;
-}
-form td.input-label .required {
-  font-size: 10px;
-  color: #999999;
-  padding-left: 5px;
-  width: 100%;
-  float: left;
+#signin label {
+  font-size: 0.9em;
+  color: #888;
 }
 .form-errors {
   color: #ff0000;

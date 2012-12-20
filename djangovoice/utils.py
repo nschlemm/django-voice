@@ -1,15 +1,36 @@
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.contrib.sites.models import Site
+from settings import BRAND_VIEW
 
 
-def paginate(queryset, items, request):
-    paginator = Paginator(queryset, items)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    try:
-        queryset_list = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        queryset_list = paginator.page(paginator.num_pages)
+def djangovoice_extra_context(method):
+    """
+    Adds djangovoice extra contexts to view context variable params.
+    """
+    def wrapped(self, **kwargs):
+        context = method(self, **kwargs)
 
-    return queryset_list
+        for c_key, c_value in get_djangovoice_extra_context().items():
+            context.setdefault(c_key, c_value)
+
+        return context
+    return wrapped
+
+
+def get_djangovoice_extra_context():
+    """
+    Gets extra context for djangovoice.
+
+    :return: a context dict.
+    """
+    if Site._meta.installed:
+        current_site = Site.objects.get_current()
+
+    else:
+        current_site = None
+
+    context = {
+        'context': current_site,
+        'brand_view': BRAND_VIEW
+    }
+
+    return context

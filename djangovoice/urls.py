@@ -1,9 +1,11 @@
 from django.conf.urls import include, patterns, url
+from django.contrib.auth.views import login
 from djangovoice.models import Feedback
 from djangovoice.views import (
     FeedbackListView, FeedbackWidgetView, FeedbackSubmitView,
     FeedbackDetailView, FeedbackEditView, FeedbackDeleteView)
 from djangovoice.feeds import LatestFeedback
+from utils import get_djangovoice_extra_context
 
 feedback_dict = {
     'model': Feedback,
@@ -25,7 +27,8 @@ urlpatterns = patterns(
         view=FeedbackListView.as_view(),
         name='djangovoice_list_type'),
 
-    url(r'^(?P<list>all|open|closed|mine)/(?P<type>[-\w]+)/(?P<status>[-\w]+)/$',
+    url(
+        r'^(?P<list>all|open|closed|mine)/(?P<type>[-\w]+)/(?P<status>[-\w]+)/$',
         view=FeedbackListView.as_view(),
         name='djangovoice_list_type_status'),
 
@@ -36,6 +39,15 @@ urlpatterns = patterns(
     url(r'^submit/$',
         view=FeedbackSubmitView.as_view(),
         name='djangovoice_submit'),
+
+    # override login template
+    url(r'^signin/$',
+        view=login,
+        name='djangovoice-signin',
+        kwargs={
+            'template_name': 'djangovoice/signin.html',
+            'extra_context': get_djangovoice_extra_context()
+        }),
 
     url(r'^(?P<pk>\d+)/$',
         view=FeedbackDetailView.as_view(),

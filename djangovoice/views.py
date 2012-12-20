@@ -1,7 +1,6 @@
 import uuid
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.sites.models import Site
 from django.db.models import Q
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
@@ -12,33 +11,14 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from djangovoice.models import Feedback, Type
 from djangovoice.forms import WidgetForm, EditForm
-
-
-def current_site_context(method):
-    """Adds the current_site in template context variable 'params'."""
-    def wrapped(self, **kwargs):
-        context = method(self, **kwargs)
-
-        if Site._meta.installed:
-            current_site = Site.objects.get_current()
-
-        else:
-            current_site = None
-
-        context.setdefault('site', current_site)
-        brand_view = getattr(settings, 'VOICE_BRAND_VIEW', 'djangovoice_home')
-        context.setdefault('brand_view', brand_view)
-
-        return context
-    return wrapped
+from djangovoice.utils import djangovoice_extra_context
 
 
 class FeedbackDetailView(DetailView):
-
     template_name = 'djangovoice/detail.html'
     model = Feedback
 
-    @current_site_context
+    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackDetailView, self).get_context_data(**kwargs)
 
@@ -56,7 +36,6 @@ class FeedbackDetailView(DetailView):
 
 
 class FeedbackListView(ListView):
-
     template_name = 'djangovoice/list.html'
     model = Feedback
     paginate_by = 10
@@ -64,7 +43,7 @@ class FeedbackListView(ListView):
     def get_queryset(self):
         f_list = self.kwargs.get('list', 'open')
         f_type = self.kwargs.get('type', 'all')
-        f_status= self.kwargs.get('status', 'all')
+        f_status = self.kwargs.get('status', 'all')
         f_filters = {}
         # Tag to display also user's private discussions
         f_showpriv = False
@@ -102,11 +81,11 @@ class FeedbackListView(ListView):
 
         return queryset
 
-    @current_site_context
+    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         f_list = self.kwargs.get('list', 'open')
         f_type = self.kwargs.get('type', 'all')
-        f_status= self.kwargs.get('status', 'all')
+        f_status = self.kwargs.get('status', 'all')
 
         title = _("Feedback")
 
@@ -146,7 +125,6 @@ class FeedbackListView(ListView):
 
 
 class FeedbackWidgetView(FormView):
-
     template_name = 'djangovoice/widget.html'
     form_class = WidgetForm
     initial = {'type': Type.objects.get(pk=1)}
@@ -177,36 +155,42 @@ class FeedbackWidgetView(FormView):
 
 
 class FeedbackSubmitView(FormView):
-
     template_name = 'djangovoice/submit.html'
     form_class = WidgetForm
 
-    @current_site_context
+    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackSubmitView, self).get_context_data(**kwargs)
 
     def get(self, request, *args, **kwargs):
-        if self.request.user.is_anonymous() and not getattr(settings, 'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT', False):
-            return redirect(reverse('django.contrib.auth.views.login') + '?next=%s' % request.path)
+        if self.request.user.is_anonymous() and not getattr(settings,
+                                                            'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT',
+                                                            False):
+            return redirect(reverse(
+                'django.contrib.auth.views.login') + '?next=%s' % request.path)
         return super(FeedbackSubmitView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if self.request.user.is_anonymous() and not getattr(settings, 'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT', False):
+        if self.request.user.is_anonymous() and not getattr(settings,
+                                                            'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT',
+                                                            False):
             return HttpResponseNotFound
         return super(FeedbackSubmitView, self).post(request, *args, **kwargs)
 
     def get_form(self, form_class):
         form = super(FeedbackSubmitView, self).get_form(form_class)
         if self.request.user.is_anonymous():
-          del form.fields['anonymous']
-          del form.fields['private']
+            del form.fields['anonymous']
+            del form.fields['private']
         else:
-          del form.fields['email']
+            del form.fields['email']
         return form
 
     def form_valid(self, form):
         feedback = form.save(commit=False)
-        if self.request.user.is_anonymous() and getattr(settings, 'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT', False):
+        if self.request.user.is_anonymous() and getattr(settings,
+                                                        'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT',
+                                                        False):
             feedback.private = True
         elif form.data.get('anonymous') != 'on':
             feedback.user = self.request.user
@@ -223,7 +207,6 @@ class FeedbackSubmitView(FormView):
 
 
 class FeedbackEditView(FormView):
-
     template_name = 'djangovoice/edit.html'
 
     def get_form_class(self):
@@ -243,7 +226,7 @@ class FeedbackEditView(FormView):
 
         return kwargs
 
-    @current_site_context
+    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackEditView, self).get_context_data(**kwargs)
 
@@ -265,13 +248,12 @@ class FeedbackEditView(FormView):
 
 
 class FeedbackDeleteView(DeleteView):
-
     template_name = 'djangovoice/delete.html'
 
     def get_object(self):
         return Feedback.objects.get(pk=self.kwargs.get('pk'))
 
-    @current_site_context
+    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackDeleteView, self).get_context_data(**kwargs)
 

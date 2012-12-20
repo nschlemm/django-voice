@@ -51,7 +51,7 @@
               </li>
             {% else %}
               <li>
-                <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'djangovoice_home' %}">
+                <a href="{% url 'djangovoice-signin' %}?next={% url 'djangovoice_home' %}">
                   {% trans "sign in" %}
                 </a>
               </li>
