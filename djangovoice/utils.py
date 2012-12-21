@@ -29,7 +29,7 @@ def get_djangovoice_extra_context():
         current_site = None
 
     context = {
-        'context': current_site,
+        'site': current_site,
         'brand_view': BRAND_VIEW
     }
 

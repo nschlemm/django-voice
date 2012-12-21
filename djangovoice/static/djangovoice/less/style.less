@@ -17,6 +17,12 @@
   padding: 10px;
 }
 
+.reset-ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 body {
   background-color: #eee;
 }
@@ -59,6 +65,26 @@ header {
     }
   }
 
+  .navbottom {
+    position: absolute;
+    top:  65px;
+    .reset-ul;
+
+    li {
+      display: inline;
+
+      a {
+        display: inline-block;
+        padding: 0 10px;
+        background-color: @aqua;
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 25px;
+        color: #fff;
+      }
+    }
+  }
+
   .navbar {
     margin-bottom: 20px;
 
@@ -71,8 +97,13 @@ header {
   }
 
   .navbar-inner {
+    height: 70px;
     background-color: @green2;
     background-image: none;
+
+    .brand {
+      font-size: 28px;
+    }
   }
 }
 
@@ -145,11 +176,16 @@ header {
   border: 1px solid @green2;
   background-color: #fff;
 
-  h2 {
-    margin: 20px 0 0 0;
+  .add-new {
+    padding: 3px 10px;
+    background-color: @blue;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
   }
 
-  hr {
+  h2 {
     margin: 0;
   }
 
@@ -320,6 +356,7 @@ span.feedback-type {
 .feedback-comments {
   margin-right: 10px;
   font-size: 11px;
+  display: block;
 }
 
 .feedback-user,

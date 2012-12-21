@@ -72,8 +72,18 @@
       <div class="navbar navbar-static-top">
         <div class="navbar-inner">
           <div class="container-fluid">
-            <a class="brand" href="{% url brand_view %}">{{ site.name }} {% trans "Feedback" %}</a>
+            <a class="brand" href="{% url brand_view %}">
+              {{ site.name }} {% trans "Feedback" %}
+            </a>
           </div>
+          <ul class="navbottom">
+            <li>
+              <a href="{% url 'djangovoice_home' %}">{% trans "Overview" %}</a>
+            </li>
+            <li>
+              <a href="{% url 'djangovoice_submit' %}">{% trans "Submit Feedback" %}</a>
+            </li>
+          </ul>
         </div>
       </div>
     </header>

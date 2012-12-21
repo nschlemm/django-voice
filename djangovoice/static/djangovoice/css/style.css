@@ -1,6 +1,11 @@
 .content-spaces {
   padding: 10px;
 }
+.reset-ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 body {
   background-color: #eee;
 }
@@ -32,6 +37,25 @@ header .navtop ul.pull-right li span {
 header .navtop ul.pull-right li span a {
   text-decoration: none;
 }
+header .navbottom {
+  position: absolute;
+  top: 65px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+header .navbottom li {
+  display: inline;
+}
+header .navbottom li a {
+  display: inline-block;
+  padding: 0 10px;
+  background-color: #3b8686;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 25px;
+  color: #fff;
+}
 header .navbar {
   margin-bottom: 20px;
 }
@@ -42,8 +66,12 @@ header .navbar a.brand {
   text-shadow: #222 0 0 1px;
 }
 header .navbar-inner {
+  height: 70px;
   background-color: #79bd9a;
   background-image: none;
+}
+header .navbar-inner .brand {
+  font-size: 28px;
 }
 #actions {
   padding-top: 20px;
@@ -101,10 +129,15 @@ header .navbar-inner {
   border: 1px solid #79bd9a;
   background-color: #fff;
 }
-#feedback h2 {
-  margin: 20px 0 0 0;
+#feedback .add-new {
+  padding: 3px 10px;
+  background-color: #0b486b;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  text-decoration: none;
 }
-#feedback hr {
+#feedback h2 {
   margin: 0;
 }
 #feedback ul {
@@ -233,6 +266,7 @@ span.feedback-type-question {
 .feedback-comments {
   margin-right: 10px;
   font-size: 11px;
+  display: block;
 }
 .feedback-user,
 .feedback-date {
