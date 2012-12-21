@@ -114,6 +114,14 @@ header {
   }
 }
 
+h1 {
+  &.page-title {
+    margin: 0;
+    font-size: 1.5em;
+    color: @blue;
+  }
+}
+
 #actions {
   padding-top: 20px;
 }
@@ -174,6 +182,21 @@ header {
           text-shadow: 0 1px 0 #ffffff;
         }
       }
+    }
+  }
+}
+
+#submit {
+  form {
+    margin-right: 20px;
+    padding-top: 10px;
+
+    textarea {
+      min-height: 100px;
+    }
+
+    button {
+      margin-top: 20px;
     }
   }
 }

@@ -77,6 +77,11 @@ header .navbar-inner {
 header .navbar-inner .brand {
   font-size: 28px;
 }
+h1.page-title {
+  margin: 0;
+  font-size: 1.5em;
+  color: #0b486b;
+}
 #actions {
   padding-top: 20px;
 }
@@ -127,6 +132,16 @@ header .navbar-inner .brand {
 #sidebar ul li.active a {
   color: #3f4547;
   text-shadow: 0 1px 0 #ffffff;
+}
+#submit form {
+  margin-right: 20px;
+  padding-top: 10px;
+}
+#submit form textarea {
+  min-height: 100px;
+}
+#submit form button {
+  margin-top: 20px;
 }
 /**** index ****/
 #feedback {

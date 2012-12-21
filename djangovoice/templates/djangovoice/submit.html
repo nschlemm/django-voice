@@ -10,20 +10,26 @@
 {% endblock %}
 
 {% block content %}
-  <h1>{% trans "Feedback" %}</h1>
+  <div id="submit" class="content-spaces">
+    <h1 class="page-title">{% trans "Submit your feedback" %}</h1>
 
-  <form action="{% url 'djangovoice_submit' %}" method="post">
-    {% csrf_token %}
+    <form action="{% url 'djangovoice_submit' %}" method="post" class="form-horizontal">
+      {% csrf_token %}
 
-    <table>
-      {% for field in form %}
-        {% include "djangovoice/includes/fields.html" %}
-      {% endfor %}
-      <tr>
-        <td></td>
-        <td><input type="submit" value="{% trans "Submit" %}" class="btn btn-primary" /></td>
-      </tr>
-    </table>
+      {% include "djangovoice/includes/field.html" with field=form.title %}
+      {% include "djangovoice/includes/field.html" with field=form.description %}
+      {% include "djangovoice/includes/field.html" with field=form.type %}
 
-  </form>
+      <div class="control-group">
+        <div class="controls">
+          <div>
+            {% include "djangovoice/includes/field_checkbox.html" with field=form.anonymous inline=1 %}
+            {% include "djangovoice/includes/field_checkbox.html" with field=form.private inline=1 %}
+          </div>
+
+          <button type="submit" class="btn">{% trans "Submit" %}</button>
+        </div>
+      </div>
+    </form>
+  </div>
 {% endblock %}
