@@ -11,6 +11,10 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block navbottom %}
+  {% include "djangovoice/includes/navbottom.html" with active_tab='overview' %}
+{% endblock %}
+
 {% block content %}
   <div class="content-spaces">
     <h2>{{ title }}</h2>

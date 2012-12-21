@@ -76,14 +76,9 @@
               {{ site.name }} {% trans "Feedback" %}
             </a>
           </div>
-          <ul class="navbottom">
-            <li>
-              <a href="{% url 'djangovoice_home' %}">{% trans "Overview" %}</a>
-            </li>
-            <li>
-              <a href="{% url 'djangovoice_submit' %}">{% trans "Submit Feedback" %}</a>
-            </li>
-          </ul>
+          {% block navbottom %}
+            {% include "djangovoice/includes/navbottom.html" %}
+          {% endblock %}
         </div>
       </div>
     </header>

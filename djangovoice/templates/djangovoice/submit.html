@@ -5,7 +5,9 @@
 
 {% block title %}{% trans "Feedback" %}{% endblock %}
 
-{% block location %}Feedback{% endblock %}
+{% block navbottom %}
+  {% include "djangovoice/includes/navbottom.html" with active_tab='new_feedback' %}
+{% endblock %}
 
 {% block content %}
   <h1>{% trans "Feedback" %}</h1>
