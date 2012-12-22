@@ -55,6 +55,7 @@ After these steps, your INSTALLED_APPS in settings.py must be seen like this:
 
   INSTALLED_APPS = (
       ...
+      'django.contrib.comments',
       'qhonuskan_votes',
       'gravatar',
       'djangovoice'
