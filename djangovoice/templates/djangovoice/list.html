@@ -2,12 +2,8 @@
 
 {% load i18n %}
 {% load url from future %}
-{% load djangovoice_tags qhonuskan_votes gravatar comments %}
-
-{% block scripts %}
-  {{ block.super }}
-  {% voting_script %}
-{% endblock %}
+{% load djangovoice_tags gravatar comments %}
+{% load vote_buttons_for from qhonuskan_votes %}
 
 {% block title %}{{ title }}{% endblock %}
 

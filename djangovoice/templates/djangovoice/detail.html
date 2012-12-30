@@ -1,14 +1,10 @@
 {% extends "djangovoice/base.html" %}
 
 {% load url from future %}
-{% load gravatar qhonuskan_votes djangovoice_tags comments i18n %}
+{% load gravatar djangovoice_tags comments i18n %}
+{% load vote_buttons_for from qhonuskan_votes %}
 
 {% block title %}{% trans "Feedback" %}{% endblock %}
-
-{% block scripts %}
-  {{ block.super }}
-  {% voting_script %}
-{% endblock %}
 
 {% block actions %}
 {% if user.is_staff or user == feedback.user %}
@@ -18,21 +14,22 @@
 {% endblock %}
 
 {% block content %}
+  <span class="feedback-type feedback-type-{{ feedback.type.slug }} pull-right">
+    {{ feedback.type.title }}
+  </span>
+  <span class="feedback-status feedback-status-{{ feedback.status.slug }} pull-right">
+    {{ feedback.status.title }}
+  </span>
 
-{% if feedback.duplicate %}
-<div id="feedback-duplicate">{% trans "Duplicate of" %} <a href="{{ feedback.duplicate.get_absolute_url }}">{{ feedback.duplicate.title }}</a></div>
-<div class="clear"></div>
-{% endif %}
+  <h3 class="feedback-title content-spaces">{{ feedback.title }}</h3>
 
-<div style="float:left; margin: 20px 20px 0 0;">
-    {% vote_buttons_for feedback %}
-</div>
+  {% if feedback.duplicate %}
+    <div id="feedback-duplicate">{% trans "Duplicate of" %} <a href="{{ feedback.duplicate.get_absolute_url }}">{{ feedback.duplicate.title }}</a></div>
+  {% endif %}
 
-<h1 id="feedback-detail-heading">
-    <span class="feedback-type feedback-type-{{ feedback.type.slug }}"> {{ feedback.type.title }}</span>
-    {{ feedback.title }}
-    <span class="feedback-status feedback-status-{{ feedback.status.slug }}">{{ feedback.status.title }}</span>
-</h1>
+  {% vote_buttons_for feedback %}
+
+
 
 <p class="meta">
     <span class="feedback-user">
