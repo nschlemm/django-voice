@@ -1,6 +1,6 @@
 {% load qhonuskan_votes %}
 
-<div class="vote_buttons" x:model="{{ vote_model }}" x:id="{{ object.id }}">
+<div class="vote-buttons pull-left" x:model="{{ vote_model }}" x:id="{{ object.id }}">
   <div class="btn-group btn-group-vertical">
     <a href="#"
        class="upVote btn btn-mini{% if object|is_up_voted_by:user %} voted{% endif %}"

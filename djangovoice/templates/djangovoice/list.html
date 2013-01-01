@@ -29,9 +29,7 @@
             {{ object.status.title }}
           </span>
 
-          <div class="votes pull-left">
-            {% vote_buttons_for object "djangovoice/includes/vote_buttons.html" %}
-          </div>
+          {% vote_buttons_for object "djangovoice/includes/vote_buttons.html" %}
 
           <div class="details">
             <h3>
