@@ -1,5 +1,6 @@
 // colors
-@yellow: #CFF09E;
+@yellow1: #CFF09E;
+@yellow2: #F4FFE9;
 @green1: #A8DBA8;
 @green2: #79BD9A;
 @aqua: #3B8686;
@@ -92,7 +93,7 @@ header {
 
       &.active {
         a {
-          background-color: @yellow;
+          background-color: @yellow1;
           color: #555;
         }
       }
@@ -395,12 +396,11 @@ span.feedback-type {
 }
 
 #feedback-duplicate {
-  margin: 10px 0 20px 0;
-  padding: 15px 30px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #cff2b2;
-  background-color: #f4ffe9;
+  margin: 0 0 10px 0;
+  padding: 10px 15px;
+  font-size: .9em;
+  border-bottom: 1px solid @yellow1;
+  background-color: @yellow2;
 }
 
 .pagination {

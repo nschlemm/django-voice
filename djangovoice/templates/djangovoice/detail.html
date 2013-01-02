@@ -14,10 +14,6 @@
 {% endblock %}
 
 {% block content %}
-  <div class="votes pull-left">
-    {% vote_buttons_for feedback "djangovoice/includes/vote_buttons.html" %}
-  </div>
-
   <span class="feedback-type feedback-type-{{ feedback.type.slug }} pull-right">
     {{ feedback.type.title }}
   </span>
@@ -25,13 +21,17 @@
     {{ feedback.status.title }}
   </span>
 
-  <h3 class="feedback-title content-spaces">{{ feedback.title }}</h3>
-
   {% if feedback.duplicate %}
     <div id="feedback-duplicate">
       {% trans "Duplicate of" %} <a href="{{ feedback.duplicate.get_absolute_url }}">{{ feedback.duplicate.title }}</a>
     </div>
   {% endif %}
+
+  <div class="votes pull-left">
+    {% vote_buttons_for feedback "djangovoice/includes/vote_buttons.html" %}
+  </div>
+
+  <h3 class="feedback-title content-spaces">{{ feedback.title }}</h3>
 
   <p class="meta">
     <span class="feedback-user">
