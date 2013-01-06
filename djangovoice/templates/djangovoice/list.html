@@ -21,13 +21,18 @@
       {% for object in object_list %}
         {% get_comment_count for object as comment_count %}
 
-        <li class="feedback-type-{{ object.type.slug }}">
+        <li class="feedback-type-{{ object.type.slug }}{% if object.private %} feedback-private{% endif %}">
           <span class="pull-right feedback-type feedback-type-{{ object.type.slug }}">
             {{ object.type.title }}
           </span>
           <span class="pull-right feedback-status feedback-status-{{ object.status.slug }}">
             {{ object.status.title }}
           </span>
+          {% if object.private %}
+            <span class="pull-right feedback-type">
+              {% trans "PRIVATE" %}
+            </span>
+          {% endif %}
 
           {% vote_buttons_for object "djangovoice/includes/vote_buttons.html" %}
 
@@ -70,9 +75,6 @@
         </li>
       {% endfor %}
     </ul>
-{#          {% if feedback.private %}#}
-{#            <td class="feedback-private">{% trans "PRIVATE" %}</td>#}
-{#          {% endif %}#}
   {% else %}
     <p>{% trans "No one has contributed any feedback yet. Be the first and submit some feedback!" %}</p>
   {% endif %}

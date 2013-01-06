@@ -172,6 +172,9 @@ h3.feedback-title {
   height: 95px;
   border-top: 1px solid #888;
 }
+#feedback ul.feedback-list li.feedback-private {
+  background-color: #ebfeef;
+}
 #feedback ul.feedback-list li.feedback-type-problem {
   border-top-color: #ff4e4e;
 }
