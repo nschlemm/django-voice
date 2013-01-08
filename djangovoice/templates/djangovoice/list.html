@@ -76,7 +76,9 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>{% trans "No one has contributed any feedback yet. Be the first and submit some feedback!" %}</p>
+    <p class="content-spaces">
+      {% trans "No one has contributed any feedback yet. Be the first and submit some feedback!" %}
+    </p>
   {% endif %}
 {% endblock %}
 
