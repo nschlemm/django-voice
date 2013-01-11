@@ -51,65 +51,67 @@
     <p class="content-spaces">{{ feedback.description|urlize|linebreaksbr }}</p>
   {% endif %}
 
-  <div class="content-spaces feedback-comments">
+  <div class="feedback-comments">
     {% get_comment_count for feedback as comment_count %}
     {% get_comment_list for feedback as comment_list %}
 
-    <h4>
-      {% blocktrans %}
-        Comments ({{ comment_count }})
-      {% endblocktrans %}
+    <h4 class="content-spaces feedback-title">
+      {% blocktrans %}Comments ({{ comment_count }}){% endblocktrans %}
     </h4>
 
     {% if comment_list %}
       {% for comment in comment_list %}
         <div class="message{% if comment.user.is_staff %} staff{% endif %}">
-          <a name="{{ message.id }}"></a>
+          <a name="{{ comment.id }}"></a>
+
           <div class="content">
-            <div class="avatar">
-              {% gravatar comment.user.username 40 %}
-            </div>
+            <div class="avatar">{% gravatar comment.user.username 40 %}</div>
+
             {% if comment.user.is_staff %}
-              <div class="staff">
-                {% trans "Staff" %}
-              </div>
+              <div class="staff">{% trans "Staff" %}</div>
             {% endif %}
+
             <div class="message-content">
               <div class="details">
-                {% trans "From:" %}<strong>
-                {% ifequal comment.user user %}
-                  {% trans "you" %}
-                {% else %}
-                  <a href="{{ comment.user.get_absolute_url }}">{% user_name comment.user %}</a>
-                {% endifequal %}
+                {% trans "From:" %}
+
+                <strong>
+                  {% if user == comment.user %}
+                    {% trans "you" %}
+                  {% else %}
+                    <a href="{{ comment.user.get_absolute_url }}">{% user_name comment.user %}</a>
+                  {% endif %}
                 </strong>
+
                 {% trans "on" %} {{ comment.submit_date|date:"M d Y" }} {% trans "at" %} {{ comment.submit_date|date:"fA" }}
               </div>
+
               <p>{{ comment.comment|urlize|linebreaksbr }}</p>
             </div>
-            <div class="clear"></div>
           </div>
         </div>
       {% endfor %}
 
     {% else %}
-      <p>{% trans "No one has commented. Have your say." %}</p>
+      <p class="content-spaces">{% trans "No one has commented. Have your say." %}</p>
     {% endif %}
 
     {% if user.is_authenticated %}
-      <h4>{% trans "Leave a comment" %}</h4>
-      {% get_comment_form for feedback as form %}
-      <form action="{% comment_form_target %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ feedback.get_absolute_url }}" />
-        {{ form.comment }}
-        {{ form.honeypot }}
-        {{ form.content_type }}
-        {{ form.object_pk }}
-        {{ form.timestamp }}
-        {{ form.security_hash }}
-        <input type="submit" value="{% trans "Post comment" %}" id="id_submit" class="btn btn-primary" />
-      </form>
+      <div class="content-spaces comment-form">
+        <h4>{% trans "Leave a comment" %}</h4>
+        {% get_comment_form for feedback as form %}
+        <form action="{% comment_form_target %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ feedback.get_absolute_url }}" />
+          {{ form.comment }}
+          {{ form.honeypot }}
+          {{ form.content_type }}
+          {{ form.object_pk }}
+          {{ form.timestamp }}
+          {{ form.security_hash }}
+          <input type="submit" value="{% trans "Post comment" %}" id="id_submit" class="btn btn-primary" />
+        </form>
+      </div>
     {% endif %}
   </div>
 {% endblock %}

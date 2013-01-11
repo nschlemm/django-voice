@@ -22,10 +22,12 @@
 
       <div class="control-group">
         <div class="controls">
-          <div>
-            {% include "djangovoice/includes/field_checkbox.html" with field=form.anonymous inline=1 %}
-            {% include "djangovoice/includes/field_checkbox.html" with field=form.private inline=1 %}
-          </div>
+          {% if user.is_authenticated %}
+            <div>
+              {% include "djangovoice/includes/field_checkbox.html" with field=form.anonymous inline=1 %}
+              {% include "djangovoice/includes/field_checkbox.html" with field=form.private inline=1 %}
+            </div>
+          {% endif %}
 
           <button type="submit" class="btn">{% trans "Submit" %}</button>
         </div>
