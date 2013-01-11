@@ -157,7 +157,7 @@ class FeedbackWidgetView(FormView):
 
 
 class FeedbackSubmitView(FormView):
-    template_name = 'djangovoice/submit.html'
+    template_name = 'djangovoice/form.html'
     form_class = WidgetForm
 
     @djangovoice_extra_context
