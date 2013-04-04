@@ -10,9 +10,11 @@ from django.utils.translation import ugettext as _
 from django.views.generic import DeleteView, DetailView, FormView, ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
 from djangovoice.models import Feedback, Type
-from djangovoice.forms import WidgetForm, EditForm
+from djangovoice.forms import WidgetForm, EditForm, FeedbackForm
 from djangovoice.utils import djangovoice_extra_context
+from djangovoice.settings import ALLOW_ANONYMOUS_USER_SUBMIT
 
 
 class FeedbackDetailView(DetailView):
@@ -158,42 +160,44 @@ class FeedbackWidgetView(FormView):
 
 class FeedbackSubmitView(FormView):
     template_name = 'djangovoice/form.html'
-    form_class = WidgetForm
+    form_class = FeedbackForm
 
     @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackSubmitView, self).get_context_data(**kwargs)
 
     def get(self, request, *args, **kwargs):
-        if self.request.user.is_anonymous() and not getattr(settings,
-                                                            'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT',
-                                                            False):
-            return redirect(reverse(
-                'django.contrib.auth.views.login') + '?next=%s' % request.path)
+        if request.user.is_anonymous() and not ALLOW_ANONYMOUS_USER_SUBMIT:
+            redirect_url = '%s?next=%s' % (
+                reverse('django.contrib.auth.views.login'), request.path)
+            return redirect(redirect_url)
+
         return super(FeedbackSubmitView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if self.request.user.is_anonymous() and not getattr(settings,
-                                                            'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT',
-                                                            False):
+        if request.user.is_anonymous() and not ALLOW_ANONYMOUS_USER_SUBMIT:
             raise HttpResponseNotFound
+
         return super(FeedbackSubmitView, self).post(request, *args, **kwargs)
 
     def get_form(self, form_class):
         form = super(FeedbackSubmitView, self).get_form(form_class)
+
         if self.request.user.is_anonymous():
             del form.fields['anonymous']
             del form.fields['private']
+
         else:
             del form.fields['email']
+
         return form
 
     def form_valid(self, form):
         feedback = form.save(commit=False)
-        if self.request.user.is_anonymous() and getattr(settings,
-                                                        'VOICE_ALLOW_ANONYMOUS_USER_SUBMIT',
-                                                        False):
+
+        if request.user.is_anonymous() and VOICE_ALLOW_ANONYMOUS_USER_SUBMIT:
             feedback.private = True
+
         elif form.data.get('anonymous') != 'on':
             feedback.user = self.request.user
 
@@ -204,8 +208,12 @@ class FeedbackSubmitView(FormView):
 
         # If there is no user, show the feedback with slug
         if not feedback.user:
-            return redirect('djangovoice_slug_item', slug=feedback.slug)
-        return redirect(feedback)
+            response = redirect('djangovoice_slug_item', slug=feedback.slug)
+
+        else:
+            response = redirect(feedback)
+
+        return response
 
 
 class FeedbackEditView(FormView):
