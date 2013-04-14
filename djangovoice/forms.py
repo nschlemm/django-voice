@@ -36,7 +36,7 @@ class FeedbackForm(forms.ModelForm):
             deleted_fields = ['anonymous', 'private']
 
         for field_name in deleted_fields:
-            del form.fields[field_name]
+            del self.fields[field_name]
 
     def clean(self):
         cleaned_data = super(FeedbackForm, self).clean()
