@@ -12,15 +12,14 @@ from django.utils.decorators import method_decorator
 
 from djangovoice.models import Feedback, Type
 from djangovoice.forms import WidgetForm, EditForm, FeedbackForm
-from djangovoice.utils import djangovoice_extra_context
+from djangovoice.mixins import VoiceMixin
 from djangovoice.settings import ALLOW_ANONYMOUS_USER_SUBMIT
 
 
-class FeedbackDetailView(DetailView):
+class FeedbackDetailView(VoiceMixin, DetailView):
     template_name = 'djangovoice/detail.html'
     model = Feedback
 
-    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackDetailView, self).get_context_data(**kwargs)
 
@@ -38,7 +37,7 @@ class FeedbackDetailView(DetailView):
         return super(FeedbackDetailView, self).get(request, *args, **kwargs)
 
 
-class FeedbackListView(ListView):
+class FeedbackListView(VoiceMixin, ListView):
     template_name = 'djangovoice/list.html'
     model = Feedback
     paginate_by = 10
@@ -84,7 +83,6 @@ class FeedbackListView(ListView):
 
         return queryset
 
-    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         f_list = self.kwargs.get('list', 'open')
         f_type = self.kwargs.get('type', 'all')
@@ -157,11 +155,10 @@ class FeedbackWidgetView(FormView):
         return super(FeedbackWidgetView, self).form_invalid(form)
 
 
-class FeedbackSubmitView(FormView):
+class FeedbackSubmitView(VoiceMixin, FormView):
     template_name = 'djangovoice/form.html'
     form_class = FeedbackForm
 
-    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackSubmitView, self).get_context_data(**kwargs)
 
@@ -209,7 +206,7 @@ class FeedbackSubmitView(FormView):
         return response
 
 
-class FeedbackEditView(FormView):
+class FeedbackEditView(VoiceMixin, FormView):
     template_name = 'djangovoice/edit.html'
 
     def get_form_class(self):
@@ -229,7 +226,6 @@ class FeedbackEditView(FormView):
 
         return kwargs
 
-    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackEditView, self).get_context_data(**kwargs)
 
@@ -250,13 +246,12 @@ class FeedbackEditView(FormView):
         return redirect(feedback)
 
 
-class FeedbackDeleteView(DeleteView):
+class FeedbackDeleteView(VoiceMixin, DeleteView):
     template_name = 'djangovoice/delete.html'
 
     def get_object(self):
         return Feedback.objects.get(pk=self.kwargs.get('pk'))
 
-    @djangovoice_extra_context
     def get_context_data(self, **kwargs):
         return super(FeedbackDeleteView, self).get_context_data(**kwargs)
 
