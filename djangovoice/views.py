@@ -1,6 +1,5 @@
 import uuid
 from django.core.exceptions import PermissionDenied
-from django.conf import settings
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseNotFound
@@ -188,9 +187,7 @@ class FeedbackSubmitView(FormView):
     def form_valid(self, form):
         feedback = form.save(commit=False)
 
-        import ipdb; ipdb.set_trace()
-
-        if request.user.is_anonymous() and VOICE_ALLOW_ANONYMOUS_USER_SUBMIT:
+        if self.request.user.is_anonymous() and ALLOW_ANONYMOUS_USER_SUBMIT:
             feedback.private = True
             feedback.anonymous = True
 

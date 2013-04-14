@@ -1,6 +1,5 @@
 from django import forms
 from djangovoice.models import Feedback
-from djangovoice.settings import ALLOW_ANONYMOUS_USER_SUBMIT
 
 
 class WidgetForm(forms.ModelForm):
