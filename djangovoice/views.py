@@ -166,39 +166,35 @@ class FeedbackSubmitView(FormView):
     def get_context_data(self, **kwargs):
         return super(FeedbackSubmitView, self).get_context_data(**kwargs)
 
-    def get(self, request, *args, **kwargs):
-        if request.user.is_anonymous() and not ALLOW_ANONYMOUS_USER_SUBMIT:
-            redirect_url = '%s?next=%s' % (
-                reverse('django.contrib.auth.views.login'), request.path)
-            return redirect(redirect_url)
+    def dispatch(self, request, *args, **kwargs):
+        # if project doesn't allow anonymous user submission, check
+        # authentication:
+        if (not ALLOW_ANONYMOUS_USER_SUBMIT
+                and not request.user.is_authenticated()):
+            login_url = reverse('django.contrib.auth.views.login')
+            return redirect(login_url + '?next=%s' % request.path)
 
-        return super(FeedbackSubmitView, self).get(request, *args, **kwargs)
+        return super(FeedbackSubmitView, self).dispatch(
+            request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        if request.user.is_anonymous() and not ALLOW_ANONYMOUS_USER_SUBMIT:
-            raise HttpResponseNotFound
+    def get_form_kwargs(self):
+        # define user in form, some form data return fields for user
+        # authentication.
+        kwargs = super(FeedbackSubmitView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
 
-        return super(FeedbackSubmitView, self).post(request, *args, **kwargs)
-
-    def get_form(self, form_class):
-        form = super(FeedbackSubmitView, self).get_form(form_class)
-
-        if self.request.user.is_anonymous():
-            del form.fields['anonymous']
-            del form.fields['private']
-
-        else:
-            del form.fields['email']
-
-        return form
+        return kwargs
 
     def form_valid(self, form):
         feedback = form.save(commit=False)
 
+        import ipdb; ipdb.set_trace()
+
         if request.user.is_anonymous() and VOICE_ALLOW_ANONYMOUS_USER_SUBMIT:
             feedback.private = True
+            feedback.anonymous = True
 
-        elif form.data.get('anonymous') != 'on':
+        elif not form.cleaned_data.get('anonymous', False):
             feedback.user = self.request.user
 
         if not feedback.user:
