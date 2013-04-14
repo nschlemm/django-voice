@@ -44,7 +44,7 @@ urlpatterns = patterns(
     # override login template
     url(r'^signin/$',
         view=login,
-        name='djangovoice-signin',
+        name='djangovoice_signin',
         kwargs={
             'template_name': 'djangovoice/signin.html',
             'extra_context': get_voice_extra_context()
