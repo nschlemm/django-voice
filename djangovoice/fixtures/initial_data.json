@@ -6,5 +6,5 @@
     {"pk": 1, "model": "djangovoice.type", "fields": {"slug": "idea", "title": "Idea"}},
     {"pk": 2, "model": "djangovoice.type", "fields": {"slug": "problem", "title": "Problem"}},
     {"pk": 3, "model": "djangovoice.type", "fields": {"slug": "question", "title": "Question"}},
-   {"pk": 4, "model": "djangovoice.type", "fields": {"slug": "general", "title": "General"}}
+    {"pk": 4, "model": "djangovoice.type", "fields": {"slug": "general", "title": "General"}}
 ]
