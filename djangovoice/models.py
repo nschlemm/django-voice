@@ -49,13 +49,13 @@ class Type(models.Model):
 
 
 class Feedback(models.Model):
-    type = models.ForeignKey(Type, verbose_name=_("Type"))
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(
         blank=True, verbose_name=_("Description"),
         help_text=_(
             "This will be viewable by other people - do not include any "
             "private details such as passwords or phone numbers here."))
+    type = models.ForeignKey(Type, verbose_name=_("Type"))
     anonymous = models.BooleanField(
         blank=True, verbose_name=_("Anonymous"),
         help_text=_("Do not show who sent this"))
