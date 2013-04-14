@@ -7,6 +7,7 @@ from djangovoice.views import (
 from djangovoice.feeds import LatestFeedback
 from utils import get_voice_extra_context
 
+feedback_list_regex = '^(?P<list>all|open|closed|mine)'
 feedback_dict = {
     'model': Feedback,
     'template_object_name': 'feedback'
@@ -19,16 +20,16 @@ urlpatterns = patterns(
         view=FeedbackListView.as_view(),
         name='djangovoice_home'),
 
-    url(r'^(?P<list>all|open|closed|mine)/$',
+    url(r'%s/$' % feedback_list_regex,
         view=FeedbackListView.as_view(),
         name='djangovoice_list'),
 
-    url(r'^(?P<list>all|open|closed|mine)/(?P<type>[-\w]+)/$',
+    url(r'%s/(?P<type>[-\w]+)/$' % feedback_list_regex,
         view=FeedbackListView.as_view(),
         name='djangovoice_list_type'),
 
     url(
-        r'^(?P<list>all|open|closed|mine)/(?P<type>[-\w]+)/(?P<status>[-\w]+)/$',
+        r'%s/(?P<type>[-\w]+)/(?P<status>[-\w]+)/$' % feedback_list_regex,
         view=FeedbackListView.as_view(),
         name='djangovoice_list_type_status'),
 
