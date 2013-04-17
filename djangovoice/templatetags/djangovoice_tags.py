@@ -1,4 +1,5 @@
 from django.template import Library, Node, Variable, TemplateSyntaxError
+from djangovoice.compat import gravatar_for_user
 from djangovoice.models import Type, Status
 
 register = Library()
@@ -50,9 +51,10 @@ def build_status_list(parser, token):
 register.tag('get_status_list', build_status_list)
 
 
-@register.simple_tag
-def user_name(user):
-    """if user has full name, get user's full name, else username.
+@register.filter
+def display_name(user):
+    """
+    If user has full name, get user's full name, else username.
     """
     full_name = user.get_full_name()
     if not full_name:
@@ -66,3 +68,10 @@ def djangovoice_widget(context):
     arguments = {'STATIC_URL': context.get('STATIC_URL')}
 
     return arguments
+
+
+@register.simple_tag
+def get_user_image(user, size=80):
+    url = gravatar_for_user(user, size)
+    return '<img src="%s" alt="%s" height="%s" width="%s" />' % (
+        url, user.username, size, size)

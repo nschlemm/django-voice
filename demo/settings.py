@@ -74,7 +74,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.comments',
-    'gravatar',
     'qhonuskan_votes',
     'djangovoice',
     'south',
