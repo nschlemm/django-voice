@@ -1,8 +1,10 @@
 {% extends "djangovoice/base.html" %}
 
+{% load blocktrans trans from i18n %}
 {% load url from future %}
-{% load gravatar djangovoice_tags comments i18n %}
+{% load comments %}
 {% load vote_buttons_for from qhonuskan_votes %}
+{% load get_user_image display_name from djangovoice_tags %}
 
 {% block title %}{% trans "Feedback" %}{% endblock %}
 
@@ -37,7 +39,9 @@
     <span class="feedback-user">
       {% if feedback.user %}
         {% trans "Submitted by" %}
-        <a href="{{ feedback.user.get_absolute_url }}" title="{% trans "View profile" %}">{% user_name feedback.user %}</a>
+        <a href="{{ feedback.user.get_absolute_url }}" title="{% trans "View profile" %}">
+          {{ feedback.user|display_name }}
+        </a>
       {% else %}
         {% trans "Submitted anonymously" %}
       {% endif %}
@@ -65,7 +69,7 @@
           <a name="{{ comment.id }}"></a>
 
           <div class="content">
-            <div class="avatar">{% gravatar comment.user.username 40 %}</div>
+            <div class="avatar">{% get_user_image comment.user 40 %}</div>
 
             {% if comment.user.is_staff %}
               <div class="staff">{% trans "Staff" %}</div>
@@ -79,7 +83,9 @@
                   {% if user == comment.user %}
                     {% trans "you" %}
                   {% else %}
-                    <a href="{{ comment.user.get_absolute_url }}">{% user_name comment.user %}</a>
+                    <a href="{{ comment.user.get_absolute_url }}">
+                      {{ comment.user|display_name }}
+                    </a>
                   {% endif %}
                 </strong>
 

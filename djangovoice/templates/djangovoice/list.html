@@ -2,7 +2,7 @@
 
 {% load i18n %}
 {% load url from future %}
-{% load djangovoice_tags gravatar comments %}
+{% load djangovoice_tags comments %}
 {% load vote_buttons_for from qhonuskan_votes %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -48,10 +48,12 @@
                 {% if object.user %}
                   {% trans "Submitted by:" %}
                   <a href="{{ object.user.get_absolute_url }}" class="avatar" title="{% trans "View profile" %}">
-                    {% gravatar object.user.username 15 %}
+                    {% get_user_image object.user 15 %}
                   </a>
 
-                  <a href="{{ object.user.get_absolute_url }}" title="View profile">{% user_name object.user %}</a>
+                  <a href="{{ object.user.get_absolute_url }}" title="View profile">
+                    {{ object.user|display_name }}
+                  </a>
                 {% else %}
                   {% trans "Submitted anonymously" %}
                 {% endif %}

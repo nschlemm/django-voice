@@ -25,7 +25,6 @@ setup(
     ],
     install_requires=[
         "Django>=1.3",
-        "django-gravatar>=0.1.0",
         "qhonuskan-votes>=0.1.4"
     ]
 )

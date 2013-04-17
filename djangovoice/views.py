@@ -28,10 +28,14 @@ class FeedbackDetailView(VoiceMixin, DetailView):
 
         if feedback.private:
             # Anonymous private feedback can be only accessed with slug
-            if not request.user.is_staff and 'slug' not in kwargs and feedback.user is None:
+            if (not request.user.is_staff
+                    and not 'slug' in kwargs
+                    and feedback.user is None):
                 raise PermissionDenied
 
-            if not request.user.is_staff and request.user != feedback.user and feedback.user is not None:
+            if (not request.user.is_staff
+                    and request.user != feedback.user
+                    and feedback.user is not None):
                 raise PermissionDenied
 
         return super(FeedbackDetailView, self).get(request, *args, **kwargs)
@@ -101,7 +105,6 @@ class FeedbackListView(VoiceMixin, ListView):
 
         # update context data
         data = super(FeedbackListView, self).get_context_data(**kwargs)
-
         data.update({
             'list': f_list,
             'status': f_status,
