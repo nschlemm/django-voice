@@ -97,7 +97,7 @@ class Feedback(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'djangovoice_item', (self.id,)
+        return 'djangovoice_item', [self.id]
 
     def __unicode__(self):
         return unicode(self.title)
