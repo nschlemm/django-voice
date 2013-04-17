@@ -1,7 +1,6 @@
 -r default.txt
+-r travis.txt
 
 docutils
 ipython
 ipdb
-pep8
-South
