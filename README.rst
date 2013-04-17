@@ -2,6 +2,9 @@
 django-voice
 ============
 
+.. image:: https://travis-ci.org/gkmngrgn/django-voice.png?branch=develop
+    :target: https://travis-ci.org/gkmngrgn/django-voice
+
 django-voice integrates user feedback with your Django project. Originally built for Verb (http://verbapp.com).
 
 IMPORTANT: Upgrading to 0.4 from older versions
