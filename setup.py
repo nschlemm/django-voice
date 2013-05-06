@@ -9,8 +9,15 @@ description = file('README.rst', 'r').read()
 # get requires from requirements/global.txt file.
 requires_file_name = os.path.join(
     os.path.dirname(__file__), 'requirements', 'global.txt')
-with file(requires_file_name) as install_requires:
-    install_requires = map(lambda x: x.split(), install_requires.readlines())
+install_requires = []
+with file(requires_file_name) as requires:
+    requires_list = filter(lambda x: len(x.strip()) > 0, requires.readlines())
+    for require in requires_list:
+        require = require.strip()
+        if require[0] in ['-', '#']:
+            continue
+
+        install_requires.append(require)
 
 setup(
     name='django-voice',
