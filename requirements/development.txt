@@ -1,0 +1,6 @@
+-r global.txt
+-r travis.txt
+
+docutils
+ipython
+ipdb

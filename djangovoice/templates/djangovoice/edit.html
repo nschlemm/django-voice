@@ -1,4 +1,4 @@
-{% extends "djangovoice/feedback_base.html" %}
+{% extends "djangovoice/base.html" %}
 {% load trans from i18n %}
 
 {% block title %}{% trans "Edit" %}{% endblock %}
@@ -8,7 +8,7 @@
     {% csrf_token %}
     <table>
         {% for field in form %}
-        {% include "djangovoice/includes/fields.html" %}
+        {% include "djangovoice/includes/field.html" %}
         {% endfor %}
         <tr>
             <td></td>

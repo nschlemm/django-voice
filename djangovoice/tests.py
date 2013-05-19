@@ -1,8 +1,21 @@
-from django.utils import unittest
+from django.core.urlresolvers import reverse
+from django.test import Client, TestCase
+
 from djangovoice.models import *
 
 
-class StatusTestCase(models.Model):
+class ViewTestCase(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_feedback_list_page(self):
+        # user is not logged in, but it can see feedback list:
+        response = self.client.get(reverse('djangovoice_home'))
+        self.assertEqual(response.status_code, 200)
+
+
+class StatusTestCase(TestCase):
     def setUp(self):
         self.in_progress = Status.objects.create(
             title='In progress', slug='in_progress', default=False)
@@ -14,7 +27,7 @@ class StatusTestCase(models.Model):
         self.assertEqual(self.need_to_test.default, True)
 
 
-class TypeTestCase(unittest.TestCase):
+class TypeTestCase(TestCase):
     def setUp(self):
         self.bug = Type.objects.create(title='Bug', slug='bug')
         self.betterment = Type.objects.create(title='Betterment',
@@ -25,7 +38,7 @@ class TypeTestCase(unittest.TestCase):
         self.assertEqual(self.betterment.title, 'Betterment')
 
 
-class FeedbackTestCase(unittest.TestCase):
+class FeedbackTestCase(TestCase):
     def setUp(self):
         feedback_type = Type.objects.create(title='Bug', slug='bug')
         feedback_user = User.objects.create_user(

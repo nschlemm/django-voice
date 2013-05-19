@@ -1,14 +1,29 @@
 # -*- coding: utf-8 -*-
+import os.path
 from setuptools import setup, find_packages
 
-djangovoice = __import__('djangovoice')
-description = file('README.rst', 'r')
+pkg_name = 'djangovoice'
+version = __import__(pkg_name).__version__
+description = file('README.rst', 'r').read()
+
+# get requires from requirements/global.txt file.
+requires_file_name = os.path.join(
+    os.path.dirname(__file__), 'requirements', 'global.txt')
+install_requires = []
+with file(requires_file_name) as requires:
+    requires_list = filter(lambda x: len(x.strip()) > 0, requires.readlines())
+    for require in requires_list:
+        require = require.strip()
+        if require[0] in ['-', '#']:
+            continue
+
+        install_requires.append(require)
 
 setup(
     name='django-voice',
-    version=djangovoice.get_version(),
-    description="A feedback application for Django 1.3 or later",
-    long_description=description.read(),
+    version=version,
+    description="A feedback application for Django",
+    long_description=description,
     author=u'Gökmen Görgen',
     author_email='gokmen@alageek.com',
     url='https://github.com/gkmngrgn/django-voice',
@@ -17,15 +32,11 @@ setup(
     packages=find_packages(exclude=('demo', 'demo.*')),
     include_package_data=True,
     zip_safe=False,
+    install_requires=install_requires,
     classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Framework :: Django",
         "Environment :: Web Environment"
-    ],
-    install_requires=[
-        "Django>=1.3",
-        "django-gravatar>=0.1.0",
-        "django-voting>=0.1"
     ]
 )

@@ -74,13 +74,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.comments',
-    'voting',
-    'gravatar',
+    'qhonuskan_votes',
+    'djangovoice',
     'south',
     'base',
-
-    # the important point is...
-    'djangovoice'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -91,9 +88,15 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },
@@ -102,8 +105,8 @@ LOGGING = {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
-        },
-    }
+            },
+        }
 }
 
 LOGIN_URL = "/admin/login"

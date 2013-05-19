@@ -1,90 +1,86 @@
-{% extends "djangovoice/feedback_base.html" %}
+{% extends "djangovoice/base.html" %}
+
 {% load i18n %}
 {% load url from future %}
-{% load djangovoice_tags voting_tags gravatar comments %}
+{% load djangovoice_tags comments %}
+{% load vote_buttons_for from qhonuskan_votes %}
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block navbottom %}
+  {% include "djangovoice/includes/navbottom.html" with active_tab='overview' %}
+{% endblock %}
+
 {% block content %}
-  <h1>{{ title }}</h1>
+  <div class="content-spaces">
+    <h1 class="page-title">{{ title }}</h1>
+  </div>
 
-  {% if feedback_list %}
-    {% votes_by_user user on feedback_list as vote_dict %}
-    {% scores_for_objects feedback_list as score_dict %}
+  {% if object_list %}
+    <ul class="feedback-list">
+      {% for object in object_list %}
+        {% get_comment_count for object as comment_count %}
 
-    <table class="list">
-      {% for feedback in feedback_list %}
-        {% dict_entry_for_item feedback from vote_dict as vote %}
-        {% dict_entry_for_item feedback from score_dict as score %}
-        {% get_comment_count for feedback as comment_count %}
+        <li class="feedback-type-{{ object.type.slug }}{% if object.private %} feedback-private{% endif %}">
+          <span class="pull-right feedback-type feedback-type-{{ object.type.slug }}">
+            {{ object.type.title }}
+          </span>
+          <span class="pull-right feedback-status feedback-status-{{ object.status.slug }}">
+            {{ object.status.title }}
+          </span>
+          {% if object.private %}
+            <span class="pull-right feedback-type">
+              {% trans "PRIVATE" %}
+            </span>
+          {% endif %}
 
-        <tr>
-          <td class="votes">
-            <div>{{ score.score|default:0 }}</div>
-          </td>
+          {% vote_buttons_for object "djangovoice/includes/vote_buttons.html" %}
 
-          <td class="status">
-            <span class="feedback-type feedback-type-{{ feedback.type.slug }}">{{ feedback.type.title }}</span>
-          </td>
-
-          <td class="details">
+          <div class="details">
             <h3>
-              <a href="{{ feedback.get_absolute_url }}">{{ feedback.title }}</a>
-              <span class="feedback-status feedback-status-{{ feedback.status.slug }}">{{ feedback.status.title }}</span>
+              <a href="{{ object.get_absolute_url }}">
+                {{ object.title }}
+              </a>
             </h3>
 
             <p>
-              <span class="feedback-comments">
-                <a href="{{ feedback.get_absolute_url }}">
-                  {{ comment_count }} {% blocktrans %}comment{{ comment_count|pluralize }}{% endblocktrans %}
-                </a>
-              </span>
-
               <span class="feedback-user">
-                {% if feedback.user %}
+                {% if object.user %}
                   {% trans "Submitted by:" %}
-                  <a href="{{ feedback.user.get_absolute_url }}" class="avatar" title="{% trans "View profile" %}">
-                    {% gravatar feedback.user.username 15 %}
+                  <a href="{{ object.user.get_absolute_url }}" class="avatar" title="{% trans "View profile" %}">
+                    {% get_user_image object.user 15 %}
                   </a>
 
-                  <a href="{{ feedback.user.get_absolute_url }}" title="View profile">{% user_name feedback.user %}</a>
+                  <a href="{{ object.user.get_absolute_url }}" title="View profile">
+                    {{ object.user|display_name }}
+                  </a>
                 {% else %}
                   {% trans "Submitted anonymously" %}
                 {% endif %}
               </span>
 
               <span class="feedback-date">
-                {% blocktrans with feedback.created|date:"d M Y" as create_date %}on {{ create_date }}{% endblocktrans %}
+                {% blocktrans with object.created|date:"d M Y" as create_date %}on {{ create_date }}{% endblocktrans %}
+              </span>
+
+              <span class="feedback-comments">
+                <a href="{{ object.get_absolute_url }}">
+                  {% blocktrans count counter=comment_count %}
+                    {{ counter }} comment
+                  {% plural %}
+                    {{ counter }} comments
+                  {% endblocktrans %}
+                </a>
               </span>
             </p>
-          </td>
-
-          {% if feedback.private %}
-            <td class="feedback-private">{% trans "PRIVATE" %}</td>
-          {% endif %}
-        </tr>
+          </div>
+        </li>
       {% endfor %}
-    </table>
-
-    <div class="pagination">
-      <span class="step-links">
-        {% if pagination.has_previous %}
-          <a href="?page=1" id="pagination-first-page">&laquo; {% trans "first" %}</a>
-          <a href="?page={{ pagination.previous_page_number }}" id="pagination-previous-page">&larr; {% trans "previous" %}</a>
-        {% endif %}
-
-        <span class="current">
-          {% trans "Page" %} {{ pagination.number }} {% trans "of" %} {{ pagination.paginator.num_pages }}
-        </span>
-
-        {% if pagination.has_next %}
-          <a href="?page={{ pagination.next_page_number }}" id="pagination-next-page">{% trans "next" %} &rarr;</a>
-          <a href="?page={{ pagination.paginator.num_pages }}" id="pagination-last-page">{% trans "last" %} &raquo;</a>
-        {% endif %}
-      </span>
-    </div>
+    </ul>
   {% else %}
-    <p>{% trans "No one has contributed any feedback yet. Be the first and submit some feedback!" %}</p>
+    <p class="content-spaces">
+      {% trans "No one has contributed any feedback yet. Be the first and submit some feedback!" %}
+    </p>
   {% endif %}
 {% endblock %}
 

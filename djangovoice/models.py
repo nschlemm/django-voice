@@ -1,7 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import pgettext
 from django.utils.translation import ugettext_lazy as _
+from djangovoice.compat import User
+from qhonuskan_votes.models import VotesField
+from qhonuskan_votes.models import ObjectsWithScoresManager
 
 STATUS_CHOICES = (
     ('open', pgettext('status', "Open")),
@@ -47,13 +49,13 @@ class Type(models.Model):
 
 
 class Feedback(models.Model):
-    type = models.ForeignKey(Type, verbose_name=_("Type"))
     title = models.CharField(max_length=500, verbose_name=_("Title"))
     description = models.TextField(
         blank=True, verbose_name=_("Description"),
         help_text=_(
             "This will be viewable by other people - do not include any "
             "private details such as passwords or phone numbers here."))
+    type = models.ForeignKey(Type, verbose_name=_("Type"))
     anonymous = models.BooleanField(
         blank=True, verbose_name=_("Anonymous"),
         help_text=_("Do not show who sent this"))
@@ -64,16 +66,19 @@ class Feedback(models.Model):
             "view and respond to this"))
     user = models.ForeignKey(
         User, blank=True, null=True, verbose_name=_("User"))
-    email = models.EmailField(blank=True, null=True, verbose_name=_('E-mail'),
-        help_text=_('You must provide your e-mail so we can answer to you. '\
-                    'Alternatively you can bookmark next page and check'\
-                    'out for an answer later.')
-        )
+    email = models.EmailField(
+        blank=True, null=True, verbose_name=_('E-mail'),
+        help_text=_(
+            "You must provide your e-mail so we can answer to you. "
+            "Alternatively you can bookmark next page and check out for an "
+            "answer later."))
     slug = models.SlugField(max_length=10, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     status = models.ForeignKey(Status, verbose_name=_('Status'))
     duplicate = models.ForeignKey(
         'self', null=True, blank=True, verbose_name=_("Duplicate"))
+    votes = VotesField()
+    objects = ObjectsWithScoresManager()
 
     def save(self, **kwargs):
         try:
@@ -92,7 +97,7 @@ class Feedback(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'djangovoice_item', (self.id,)
+        return 'djangovoice_item', [self.id]
 
     def __unicode__(self):
         return unicode(self.title)
@@ -100,3 +105,5 @@ class Feedback(models.Model):
     class Meta:
         verbose_name = _("feedback")
         verbose_name_plural = _("feedback")
+        ordering = ('-created',)
+        get_latest_by = 'created'
