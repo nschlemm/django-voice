@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from djangovoice.models import Feedback, Type
-from djangovoice.forms import WidgetForm, EditForm, FeedbackForm
+from djangovoice.forms import WidgetForm, FeedbackForm
 from djangovoice.mixins import VoiceMixin
 from djangovoice.settings import ALLOW_ANONYMOUS_USER_SUBMIT
 

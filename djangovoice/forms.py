@@ -9,11 +9,6 @@ class WidgetForm(forms.ModelForm):
             'email', 'type', 'anonymous', 'private', 'title', 'description')
 
 
-class EditForm(forms.ModelForm):
-    class Meta:
-        model = Feedback
-
-
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
