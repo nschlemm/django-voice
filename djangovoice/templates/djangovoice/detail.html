@@ -8,13 +8,6 @@
 
 {% block title %}{% trans "Feedback" %}{% endblock %}
 
-{% block actions %}
-  {% if user.is_staff or user == feedback.user %}
-    <li><a href="{% url 'djangovoice_edit' feedback.id %}">{% trans "Edit" %} &rarr;</a></li>
-    <li><a href="{% url 'djangovoice_delete' feedback.id %}">{% trans "Delete" %} &rarr;</a></li>
-  {% endif %}
-{% endblock %}
-
 {% block content %}
   <span class="feedback-type feedback-type-{{ feedback.type.slug }} pull-right">
     {{ feedback.type.title }}
@@ -120,4 +113,8 @@
       </div>
     {% endif %}
   </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include "djangovoice/includes/sidebar_actions.html" %}
 {% endblock %}
