@@ -210,15 +210,8 @@ class FeedbackSubmitView(VoiceMixin, FormView):
 
 
 class FeedbackEditView(VoiceMixin, FormView):
-    template_name = 'djangovoice/edit.html'
-
-    def get_form_class(self):
-        feedback = self.get_object()
-        if self.request.user.is_staff:
-            return EditForm
-        elif self.request.user == feedback.user:
-            return WidgetForm
-        return None
+    template_name = 'djangovoice/form.html'
+    form_class = FeedbackForm
 
     def get_object(self):
         return Feedback.objects.get(pk=self.kwargs.get('pk'))
