@@ -26,7 +26,7 @@ class FeedbackForm(forms.ModelForm):
         # add class to fix width of title input and textarea:
         for field_name in ['title', 'description']:
             field = self.fields[field_name]
-            field.widget.attrs = {'class': 'input-block-level'}
+            field.widget.attrs.update({'class': 'input-block-level'})
 
         # change form fields for user authentication status:
         if self.user is not None and self.user.is_authenticated():
@@ -36,6 +36,10 @@ class FeedbackForm(forms.ModelForm):
 
         for field_name in deleted_fields:
             del self.fields[field_name]
+
+        # add tabindex attribute to fields:
+        for index, field in enumerate(self.fields.values(), 1):
+            field.widget.attrs.update({'tabindex': index})
 
     def clean(self):
         cleaned_data = super(FeedbackForm, self).clean()
