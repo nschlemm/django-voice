@@ -72,7 +72,7 @@ class FeedbackListView(VoiceMixin, ListView):
         # If user is checking his own feedback, do not filter by private
         # for everyone's discussions but add user's private feedback
         if not self.request.user.is_staff and f_list != 'mine':
-            f_filters.update(dict(private=False))
+            f_filters.update({'private': False})
             f_showpriv = True
 
         if f_showpriv and self.request.user.is_authenticated():
@@ -209,7 +209,7 @@ class FeedbackSubmitView(VoiceMixin, FormView):
         return response
 
 
-class FeedbackEditView(VoiceMixin, FormView):
+class FeedbackEditView(FeedbackSubmitView):
     template_name = 'djangovoice/form.html'
     form_class = FeedbackForm
 
@@ -222,9 +222,6 @@ class FeedbackEditView(VoiceMixin, FormView):
 
         return kwargs
 
-    def get_context_data(self, **kwargs):
-        return super(FeedbackEditView, self).get_context_data(**kwargs)
-
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
@@ -236,10 +233,6 @@ class FeedbackEditView(VoiceMixin, FormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         return super(FeedbackEditView, self).post(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        feedback = form.save()
-        return redirect(feedback)
 
 
 class FeedbackDeleteView(VoiceMixin, DeleteView):
