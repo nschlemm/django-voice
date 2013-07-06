@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from djangovoice.models import Feedback, Type
-from djangovoice.forms import WidgetForm, EditForm, FeedbackForm
+from djangovoice.forms import WidgetForm, FeedbackForm
 from djangovoice.mixins import VoiceMixin
 from djangovoice.settings import ALLOW_ANONYMOUS_USER_SUBMIT
 
@@ -72,7 +72,7 @@ class FeedbackListView(VoiceMixin, ListView):
         # If user is checking his own feedback, do not filter by private
         # for everyone's discussions but add user's private feedback
         if not self.request.user.is_staff and f_list != 'mine':
-            f_filters.update(dict(private=False))
+            f_filters.update({'private': False})
             f_showpriv = True
 
         if f_showpriv and self.request.user.is_authenticated():
@@ -209,16 +209,9 @@ class FeedbackSubmitView(VoiceMixin, FormView):
         return response
 
 
-class FeedbackEditView(VoiceMixin, FormView):
-    template_name = 'djangovoice/edit.html'
-
-    def get_form_class(self):
-        feedback = self.get_object()
-        if self.request.user.is_staff:
-            return EditForm
-        elif self.request.user == feedback.user:
-            return WidgetForm
-        return None
+class FeedbackEditView(FeedbackSubmitView):
+    template_name = 'djangovoice/form.html'
+    form_class = FeedbackForm
 
     def get_object(self):
         return Feedback.objects.get(pk=self.kwargs.get('pk'))
@@ -228,9 +221,6 @@ class FeedbackEditView(VoiceMixin, FormView):
         kwargs.update({'instance': self.get_object()})
 
         return kwargs
-
-    def get_context_data(self, **kwargs):
-        return super(FeedbackEditView, self).get_context_data(**kwargs)
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -243,10 +233,6 @@ class FeedbackEditView(VoiceMixin, FormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         return super(FeedbackEditView, self).post(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        feedback = form.save()
-        return redirect(feedback)
 
 
 class FeedbackDeleteView(VoiceMixin, DeleteView):
