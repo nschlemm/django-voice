@@ -15,6 +15,9 @@ else:
 if 'gravatar' in settings.INSTALLED_APPS:
     from gravatar.templatetags.gravatar_tags import gravatar_for_user
 
+elif 'avatar' in settings.INSTALLED_APPS:
+    from avatar.templatetags.avatar_tags import avatar_url as gravatar_for_user
+
 else:
     gravatar_url = 'http://www.gravatar.com/'
 
