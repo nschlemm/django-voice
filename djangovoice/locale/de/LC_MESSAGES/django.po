@@ -1,0 +1,350 @@
+# Django-voice German translation.
+# Copyright (C) 2013
+# This file is distributed under the same license as the django-voice package.
+# Nikolaus Schlemm <capo@coder-nostra.org>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-01 13:40+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:9
+msgctxt "status"
+msgid "Open"
+msgstr "Offen"
+
+#: models.py:10
+msgctxt "status"
+msgid "Closed"
+msgstr "Geschlossen"
+
+#: models.py:19
+msgid "New feedback will have this status"
+msgstr "Neues Feedback wird diesen Status haben"
+
+#: models.py:39
+msgid "status"
+msgstr "Status"
+
+#: models.py:40
+msgid "statuses"
+msgstr "Status"
+
+#: models.py:52
+msgid "Title"
+msgstr "Titel"
+
+#: models.py:54
+msgid "Description"
+msgstr "Beschreibung"
+
+#: models.py:56
+msgid ""
+"This will be viewable by other people - do not include any private details "
+"such as passwords or phone numbers here."
+msgstr "Für Dritte sichtbar - daher hier keine sensiblen Daten wie Passwörter oder Telefonnummern angeben."
+
+#: models.py:58 templates/djangovoice/includes/sidebar.html:24
+msgid "Type"
+msgstr "Typ"
+
+#: models.py:60
+msgid "Anonymous"
+msgstr "Anonym"
+
+#: models.py:61
+msgid "Do not show who sent this"
+msgstr "Absender nicht anzeigen"
+
+#: models.py:63
+msgid "Private"
+msgstr "Privat"
+
+#: models.py:65
+msgid ""
+"Hide from public pages. Only site administrators will be able to view and "
+"respond to this"
+msgstr "Auf öffentlichen Seiten verstecken. Nur Administratoren werden dies sehen und beantworten können."
+
+#: models.py:68
+msgid "User"
+msgstr "Benutzer"
+
+#: models.py:70
+msgid "E-mail"
+msgstr "E-Mail"
+
+#: models.py:72
+msgid ""
+"You must provide your e-mail so we can answer to you. Alternatively you can "
+"bookmark next page and check out for an answer later."
+msgstr "Die E-Mail wird zur Beantworten benötigt. Alternativ die nächste Seite als Lesezeichen speichern und später eine Beantwortung überprüfen."
+
+#: models.py:77 templates/djangovoice/includes/sidebar.html:5
+msgid "Status"
+msgstr "Status"
+
+#: models.py:79
+msgid "Duplicate"
+msgstr "Duplikat"
+
+#: models.py:106 models.py:107 templates/djangovoice/tags/widget.html:18
+msgid "feedback"
+msgstr "Feedback"
+
+#: views.py:95 templates/djangovoice/base.html:73
+#: templates/djangovoice/detail.html:9 templates/djangovoice/form.html:6
+#: templates/djangovoice/widget.html:10
+msgid "Feedback"
+msgstr "Feedback"
+
+#: views.py:98
+msgid "Open Feedback"
+msgstr "Offenes Feedback"
+
+#: views.py:101
+msgid "Closed Feedback"
+msgstr "Geschlossenes Feedback"
+
+#: views.py:104
+msgid "My Feedback"
+msgstr "Mein Feedback"
+
+#: views.py:150
+msgid "Thanks for feedback."
+msgstr "Danke für das Feedback."
+
+#: views.py:156
+msgid "Form is invalid."
+msgstr "Das Formular ist ungültig."
+
+#: templates/djangovoice/base.html:15
+msgid "DjangoVoice"
+msgstr "DjangoVoice"
+
+#: templates/djangovoice/base.html:16
+msgid "Latest feedback"
+msgstr "Letztes Feedback"
+
+#: templates/djangovoice/base.html:36
+msgid "hello"
+msgstr "Hallo"
+
+#: templates/djangovoice/base.html:41
+msgid "submit feedback"
+msgstr "Feedback abschicken"
+
+#: templates/djangovoice/base.html:46
+msgid "sign out"
+msgstr "abmelden"
+
+#: templates/djangovoice/base.html:52
+msgid "sign in"
+msgstr "anmelden"
+
+#: templates/djangovoice/base.html:60
+msgid "all"
+msgstr "alle"
+
+#: templates/djangovoice/base.html:61
+msgid "open"
+msgstr "offene"
+
+#: templates/djangovoice/base.html:62
+msgid "closed"
+msgstr "geschlossene"
+
+#: templates/djangovoice/base.html:63
+msgid "mine"
+msgstr "meine"
+
+#: templates/djangovoice/base.html:101
+msgid "previous"
+msgstr "vorherige"
+
+#: templates/djangovoice/base.html:106
+#, python-format
+msgid ""
+"\n"
+"                      Page %(number)s of %(pages)s.\n"
+"                    "
+msgstr "\nSeite %(number)s von %(pages)s.\n "
+
+#: templates/djangovoice/base.html:113
+msgid "next"
+msgstr "nächste"
+
+#: templates/djangovoice/base.html:133
+msgid "powered by django-voice"
+msgstr "powered by django-voice"
+
+#: templates/djangovoice/delete.html:4
+#: templates/djangovoice/includes/sidebar_actions.html:10
+msgid "Delete"
+msgstr "Löschen"
+
+#: templates/djangovoice/delete.html:8
+msgid ""
+"Are you sure you wish to delete this feedback item completely, and all of "
+"the comments associated with it?"
+msgstr "Soll dieses Feedback wirklich komplett gelöscht werden, inklusive aller zugehörigen Kommentare?"
+
+#: templates/djangovoice/delete.html:9
+msgid "There is <strong>no way to undo this!</strong>"
+msgstr "Dies kann <strong>nicht rückgängig</strong> gemacht werden!"
+
+#: templates/djangovoice/delete.html:13
+msgid "Delete Permenantly"
+msgstr "Endgültig Löschen"
+
+#: templates/djangovoice/delete.html:13
+msgid "or"
+msgstr "oder"
+
+#: templates/djangovoice/delete.html:13
+msgid "leave everything as it is"
+msgstr "unverändert lassen"
+
+#: templates/djangovoice/detail.html:21
+msgid "Duplicate of"
+msgstr "Duplikat von"
+
+#: templates/djangovoice/detail.html:34
+msgid "Submitted by"
+msgstr "Eingereicht von"
+
+#: templates/djangovoice/detail.html:35 templates/djangovoice/list.html:50
+msgid "View profile"
+msgstr "Profil ansehen"
+
+#: templates/djangovoice/detail.html:39 templates/djangovoice/list.html:58
+msgid "Submitted anonymously"
+msgstr "Anonym eingereicht"
+
+#: templates/djangovoice/detail.html:43 templates/djangovoice/detail.html:85
+msgid "on"
+msgstr "am"
+
+#: templates/djangovoice/detail.html:56
+#, python-format
+msgid "Comments (%(comment_count)s)"
+msgstr "Kommentare (%(comment_count)s)"
+
+#: templates/djangovoice/detail.html:68
+msgid "Staff"
+msgstr "Mitarbeiter"
+
+#: templates/djangovoice/detail.html:73
+msgid "From:"
+msgstr "Von:"
+
+#: templates/djangovoice/detail.html:77
+msgid "you"
+msgstr "Dir"
+
+#: templates/djangovoice/detail.html:85
+msgid "at"
+msgstr "um"
+
+#: templates/djangovoice/detail.html:95
+msgid "No one has commented. Have your say."
+msgstr "Keine Kommentare. Deine Meinung dazu?"
+
+#: templates/djangovoice/detail.html:100
+msgid "Leave a comment"
+msgstr "Gib Deinen Kommentar dazu"
+
+#: templates/djangovoice/detail.html:111
+msgid "Post comment"
+msgstr "Kommentar abschicken"
+
+#: templates/djangovoice/form.html:14
+msgid "Submit your feedback"
+msgstr "Dein Feedback abschicken"
+
+#: templates/djangovoice/form.html:24 templates/djangovoice/widget.html:47
+msgid "Submit"
+msgstr "Abschicken"
+
+#: templates/djangovoice/list.html:33
+msgid "PRIVATE"
+msgstr "PRIVAT"
+
+#: templates/djangovoice/list.html:49
+msgid "Submitted by:"
+msgstr "Eingereicht von:"
+
+#: templates/djangovoice/list.html:63
+#, python-format
+msgid "on %(create_date)s"
+msgstr "am %(create_date)s"
+
+#: templates/djangovoice/list.html:68
+#, python-format
+msgid ""
+"\n"
+"                    %(counter)s comment\n"
+"                  "
+msgid_plural ""
+"\n"
+"                    %(counter)s comments\n"
+"                  "
+msgstr[0] "\n %(counter)s Kommentar\n "
+msgstr[1] "\n %(counter)s Kommentare\n "
+
+#: templates/djangovoice/list.html:82
+msgid ""
+"No one has contributed any feedback yet. Be the first and submit some "
+"feedback!"
+msgstr "Keiner hab bisher Feedback gegeben. Sei der Erste und gib Feedback!"
+
+#: templates/djangovoice/signin.html:15
+msgid "Login"
+msgstr "Login"
+
+#: templates/djangovoice/widget.html:18
+msgid "Share your thoughts with us."
+msgstr "Teile Deine Gedanken mit uns."
+
+#: templates/djangovoice/widget.html:27
+msgid "Title (required)"
+msgstr "Titel (notwendig)"
+
+#: templates/djangovoice/widget.html:30
+msgid "Write your feedback here."
+msgstr "Schreib Dein Feedback hier."
+
+#: templates/djangovoice/widget.html:54
+msgid "Please login to use feedback application."
+msgstr "Bitte anmelden, um Feedback einzureichen."
+
+#: templates/djangovoice/includes/navbottom.html:6
+msgid "Overview"
+msgstr "Übersicht"
+
+#: templates/djangovoice/includes/navbottom.html:9
+msgid "New Feedback"
+msgstr "Neues Feedback"
+
+#: templates/djangovoice/includes/sidebar.html:11
+#: templates/djangovoice/includes/sidebar.html:28
+msgid "All"
+msgstr "Alle"
+
+#: templates/djangovoice/includes/sidebar_actions.html:6
+msgid "Actions"
+msgstr "Aktionen"
+
+#: templates/djangovoice/includes/sidebar_actions.html:9
+msgid "Edit"
+msgstr "Bearbeiten"
